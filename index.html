@@ -34,25 +34,25 @@
       color: #eee;
     }
 
-    /* Hamburger with Box */
+    /* Hamburger Button */
     .menu-icon {
       position: absolute;
       top: 20px;
       left: 20px;
       cursor: pointer;
       font-size: 24px;
-      color: white;
+      color: white;            /* white icon */
       z-index: 1001;
       user-select: none;
-      background: #333;       /* Box background */
-      padding: 10px 14px;     /* Space around ☰ */
-      border-radius: 8px;     /* Rounded corners */
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Soft shadow */
+      background: rgba(255,255,255,0.2); /* transparent white box */
+      padding: 10px 14px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transition: background 0.2s ease;
     }
 
     .menu-icon:hover {
-      background: #444;  /* Darker when hover */
+      background: rgba(255,255,255,0.3);
     }
 
     /* Sidebar */
@@ -62,35 +62,46 @@
       position: fixed;
       top: 0;
       left: 0;
-      background: #333;
+      background: #222; /* Darker clean theme */
       overflow-x: hidden;
       transition: 0.3s;
       padding-top: 60px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.3);
     }
 
     .sidebar a {
-      padding: 12px 20px;
+      padding: 14px 24px;
       text-decoration: none;
       font-size: 18px;
-      color: white;
+      color: #eee;
       display: block;
       transition: 0.2s;
     }
 
     .sidebar a:hover {
-      background: #575757;
+      background: #444;
+      color: #fff;
     }
 
+    /* Close Button */
     .close-btn {
       position: absolute;
       top: 20px;
       right: 25px;
-      font-size: 30px;
+      font-size: 32px;
       cursor: pointer;
       color: white;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
     }
 
-    /* Remove ALL blue highlight on mobile */
+    .close-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Remove blue tap highlight on mobile */
     * {
       -webkit-tap-highlight-color: transparent;
     }
@@ -98,7 +109,7 @@
 </head>
 <body>
   <!-- Hamburger Menu -->
-  <div class="menu-icon" onclick="openMenu()">☰</div>
+  <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
@@ -116,10 +127,12 @@
 
   <script>
     function openMenu() {
-      document.getElementById("sidebar").style.width = "200px";
+      document.getElementById("sidebar").style.width = "220px";
+      document.getElementById("menuIcon").style.display = "none"; // hide ☰
     }
     function closeMenu() {
       document.getElementById("sidebar").style.width = "0";
+      document.getElementById("menuIcon").style.display = "block"; // show ☰ back
     }
   </script>
 </body>
