@@ -1,88 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>About - Prem Website</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a6c1ee);
-            margin: 0;
-            padding: 60px;
-            text-align: center;
+  <meta charset="UTF-8">
+  <title>About - Prem Website</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, #e2c6f5, #b5baf8);
+      overflow: hidden;
 
-            /* 🚩 Smooth fade effect */
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
+      /* 🚩 Smooth fade effect */
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
 
-        body.fade-in {
-            opacity: 1;
-        }
+    body.fade-in {
+      opacity: 1;
+    }
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+    .container {
+      max-width: 850px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
 
-        p {
-            font-size: 20px;
-            line-height: 1.6;
-            margin: 15px auto;
-            max-width: 700px;
-            color: #444;
-        }
+    h1 {
+      font-size: 40px;
+      margin-bottom: 25px;
+      color: #222;
+    }
 
-        /* 🎨 Button Style */
-        .btn {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #fff;
-            border-radius: 30px;
-            transition: 0.3s ease;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
-        }
+    h2 {
+      font-size: 28px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #444;
+    }
 
-        .btn:hover {
-            transform: scale(1.08);
-            background: linear-gradient(135deg, #ff6a00, #ee0979);
-        }
-    </style>
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+      margin: 10px auto;
+      max-width: 700px;
+      color: #333;
+    }
 
-    <script>
+    /* 🎨 Button Style */
+    .btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 15px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 30px;
+      transition: 0.3s ease;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+    }
+  </style>
+
+  <script>
     // 🚩 Fade-in on page load
     document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add("fade-in");
+      document.body.classList.add("fade-in");
     });
 
     // 🚩 Fade-out before leaving page
     document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll("a").forEach(link => {
-            if (link.hostname === window.location.hostname) { // only internal links
-                link.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const href = this.href;
-                    document.body.classList.remove("fade-in");
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 600); // match transition time
-                });
-            }
-        });
+      document.querySelectorAll("a").forEach(link => {
+        if (link.hostname === window.location.hostname) { // only internal links
+          link.addEventListener("click", function(e) {
+            e.preventDefault();
+            const href = this.href;
+            document.body.classList.remove("fade-in");
+            setTimeout(() => {
+              window.location.href = href;
+            }, 600); // match transition time
+          });
+        }
+      });
     });
-    </script>
+  </script>
 </head>
 <body>
+  <div class="container">
     <h1>About This Website</h1>
-    <p>This website is created and owned by <b>Prem</b> 🎉</p>
-    <p>Special shout outs to Rohit Kora, Babung, Prem, and Manas Kora 🙌</p>
+    <p>Welcome to <b>Prem Website</b> 🌸 — a personal space built with love, creativity, and simplicity. 
+       This site is more than just code; it’s a reflection of my journey in learning, building, and sharing.</p>
+
+    <h2>About Me</h2>
+    <p>Hi, I’m <b>Prem Kora</b> 👋. I enjoy experimenting with designs, exploring ideas, 
+       and making websites that feel clean and modern.  
+       My goal is always to create something that looks simple but leaves a lasting impression.</p>
+
+    <h2>Why This Website?</h2>
+    <p>I wanted a space that feels personal yet welcoming — a place where I can express my creativity, 
+       learn more about web design, and connect with people.  
+       This site is not just a project; it’s also my playground for trying new things and improving every day 🚀</p>
+
+    <h2>Future Vision</h2>
+    <p>This website will continue to grow with new pages, features, and ideas.  
+       I believe every small step builds into something bigger — and this is just the beginning ✨</p>
+
+    <h2>Special Mentions</h2>
+    <p>A big shout-out to <b>Rohit Kora, Babung, Prem, and Manas Kora</b> 🙌  
+       for always being part of the journey.</p>
 
     <!-- 🔘 Back Button -->
     <a href="index.html" class="btn">⬅ Back to Home</a>
+  </div>
 </body>
 </html>
