@@ -9,16 +9,17 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      min-height: 100vh;
       text-align: center;
       background: linear-gradient(135deg, #e2c6f5, #b5baf8);
+
+      /* Push text up a little */
+      padding-top: 80px;
     }
 
     .container {
       max-width: 600px;
+      margin: 0 auto;
     }
 
     h1 {
@@ -42,6 +43,7 @@
       font-size: 28px;
       color: black;
       z-index: 1001;
+      user-select: none;
     }
 
     /* Sidebar */
@@ -77,6 +79,12 @@
       font-size: 30px;
       cursor: pointer;
       color: white;
+    }
+
+    /* Remove blue highlight when clicking */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
     }
   </style>
 </head>
