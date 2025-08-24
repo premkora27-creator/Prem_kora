@@ -22,66 +22,68 @@
       opacity: 1;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 60px auto;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-
     /* 🌟 Big Highlight Title */
     .highlight-title {
-      font-size: 60px;
+      font-size: 65px;
       font-weight: 900;
       text-transform: uppercase;
-      margin-bottom: 30px;
+      margin: 60px 20px 30px;
       background: linear-gradient(135deg, #ff6a00, #ee0979, #6a11cb, #2575fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 3px;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.15);
+      letter-spacing: 4px;
+      text-shadow: 3px 3px 15px rgba(0,0,0,0.2);
+    }
+
+    /* 📦 Transparent Box */
+    .content-box {
+      background: rgba(255, 255, 255, 0.8); /* white but transparent */
+      padding: 50px 30px;
+      margin: 30px auto;
+      border-radius: 25px;
+      max-width: 950px;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.15);
     }
 
     h1 {
-      font-size: 40px;
+      font-size: 42px;
       margin-bottom: 25px;
       color: #222;
     }
 
     h2 {
-      font-size: 28px;
-      margin-top: 30px;
+      font-size: 30px;
+      margin-top: 35px;
       margin-bottom: 15px;
-      color: #444;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.7;
-      margin: 10px auto;
-      max-width: 750px;
       color: #333;
     }
 
-    /* 🎨 Button Style */
+    p {
+      font-size: 20px;
+      line-height: 1.8;
+      margin: 12px auto;
+      max-width: 800px;
+      padding: 0 15px;
+      color: #222;
+    }
+
+    /* 🎨 Bigger Button Style */
     .btn {
       display: inline-block;
-      margin-top: 40px;
-      padding: 15px 40px;
-      font-size: 18px;
+      margin: 60px auto 20px;
+      padding: 22px 65px;
+      font-size: 24px;
       font-weight: bold;
       text-decoration: none;
       color: #fff;
-      border-radius: 30px;
+      border-radius: 40px;
       transition: 0.3s ease;
       background: linear-gradient(135deg, #6a11cb, #2575fc);
-      box-shadow: 0px 6px 15px rgba(0,0,0,0.25);
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
     }
 
     .btn:hover {
-      transform: scale(1.08);
+      transform: scale(1.1);
       background: linear-gradient(135deg, #ff6a00, #ee0979);
     }
   </style>
@@ -110,10 +112,11 @@
   </script>
 </head>
 <body>
-  <div class="container">
-    <!-- 🌟 Highlight Title -->
-    <div class="highlight-title">About Prem Website</div>
+  <!-- 🌟 Highlight Title -->
+  <div class="highlight-title">About Prem Website</div>
 
+  <!-- 📦 Transparent Box -->
+  <div class="content-box">
     <h1>About This Website</h1>
     <p>Welcome to <b>Prem Website</b> 🌸 — a personal space built with love, creativity, and simplicity. 
        This site is more than just code; it’s a reflection of my journey in learning, building, and sharing.</p>
@@ -133,10 +136,10 @@
        I believe every small step builds into something bigger — and this is just the beginning ✨</p>
 
     <h2>Special Mentions</h2>
-    <p>A big shout-out to <b>Rohit Kora, Babung, Prem, and Manas Kora</b> 🙌  
+    <p>A big shout-out to <b>Rohit,Prem,Babung,Sohit,Subham,Manas,Subhajit,Aditya,Bittu</b> 🙌  
        for always being part of the journey.</p>
 
-    <!-- 🔘 Back Button -->
+    <!-- 🔘 Big Back Button -->
     <a href="index.html" class="btn">⬅ Back to Home</a>
   </div>
 </body>
