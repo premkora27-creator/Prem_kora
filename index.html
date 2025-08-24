@@ -14,8 +14,6 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-
-      /* Background gradient */
       background: linear-gradient(135deg, #e2c6f5, #b5baf8);
     }
 
@@ -24,7 +22,7 @@
     }
 
     h1 {
-      font-size: 28px;   /* Exactly like screenshot */
+      font-size: 28px;
       font-weight: bold;
       margin-bottom: 15px;
     }
@@ -35,36 +33,78 @@
       color: #eee;
     }
 
-    /* Buttons */
-    .btn {
-      display: block;
-      width: 120px;
-      margin: 12px auto;
-      padding: 10px 0;
-      font-size: 15px;
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      border-radius: 25px;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
+    /* Hamburger */
+    .menu-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      font-size: 28px;
+      color: black;
+      z-index: 1001;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(135deg, #ff6a00, #ee0979);
+    /* Sidebar */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #333;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+    }
+
+    .sidebar a {
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      background: #575757;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
     }
   </style>
 </head>
 <body>
+  <!-- Hamburger Menu -->
+  <div class="menu-icon" onclick="openMenu()">☰</div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Main Content -->
   <div class="container">
     <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
     <p>This Website owned by <b>PREM</b></p>
     <p>Shout outs: Rohit kora, Babung, Prem, Manas kora 🙌</p>
-
-    <a href="about.html" class="btn">About</a>
-    <a href="contact.html" class="btn">Contact</a>
   </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("sidebar").style.width = "200px";
+    }
+    function closeMenu() {
+      document.getElementById("sidebar").style.width = "0";
+    }
+  </script>
 </body>
 </html>
