@@ -12,9 +12,7 @@
       min-height: 100vh;
       text-align: center;
       background: linear-gradient(135deg, #e2c6f5, #b5baf8);
-
-      /* Push text up a little */
-      padding-top: 80px;
+      padding-top: 80px; /* push text up */
     }
 
     .container {
@@ -41,10 +39,10 @@
       left: 20px;
       cursor: pointer;
       font-size: 24px;
-      color: white;            /* white icon */
+      color: white;
       z-index: 1001;
       user-select: none;
-      background: rgba(255,255,255,0.2); /* transparent white box */
+      background: rgba(255,255,255,0.2);
       padding: 10px 14px;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -62,25 +60,37 @@
       position: fixed;
       top: 0;
       left: 0;
-      background: #222; /* Darker clean theme */
+      background: #fff; /* bright white theme */
       overflow-x: hidden;
       transition: 0.3s;
       padding-top: 60px;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
     }
 
+    /* Sidebar Title */
+    .sidebar h2 {
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 22px;
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    /* Sidebar links */
     .sidebar a {
       padding: 14px 24px;
       text-decoration: none;
       font-size: 18px;
-      color: #eee;
+      color: #333;
       display: block;
-      transition: 0.2s;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s, color 0.2s;
     }
 
     .sidebar a:hover {
-      background: #444;
-      color: #fff;
+      background: #f5f5f5;
+      color: #000;
     }
 
     /* Close Button */
@@ -90,15 +100,15 @@
       right: 25px;
       font-size: 32px;
       cursor: pointer;
-      color: white;
-      background: rgba(255,255,255,0.2);
+      color: #333;
+      background: rgba(0,0,0,0.05);
       padding: 6px 12px;
       border-radius: 6px;
       transition: background 0.2s ease;
     }
 
     .close-btn:hover {
-      background: rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.1);
     }
 
     /* Remove blue tap highlight on mobile */
@@ -114,6 +124,7 @@
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
     <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <h2>HOME</h2>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -122,17 +133,20 @@
   <div class="container">
     <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
     <p>This Website owned by <b>PREM</b></p>
-    <p>Shout outs: Rohit kora, Babung, Prem, Manas kora 🙌</p>
+    <p>This Website for fun but currently development</p>
   </div>
 
   <script>
     function openMenu() {
-      document.getElementById("sidebar").style.width = "220px";
+      document.getElementById("sidebar").style.width = "240px";
       document.getElementById("menuIcon").style.display = "none"; // hide ☰
     }
     function closeMenu() {
       document.getElementById("sidebar").style.width = "0";
-      document.getElementById("menuIcon").style.display = "block"; // show ☰ back
+      // Delay re-show menu icon to avoid instant popup
+      setTimeout(() => {
+        document.getElementById("menuIcon").style.display = "block";
+      }, 300); // matches sidebar transition time
     }
   </script>
 </body>
