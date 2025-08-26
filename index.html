@@ -8,14 +8,10 @@
   <!-- Google Login -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <!-- Link to external transition CSS -->
-  <link rel="stylesheet" href="transition.css">
-
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
       min-height: 100vh;
       text-align: center;
       background: linear-gradient(135deg, #e2c6f5, #b5baf8);
@@ -57,28 +53,11 @@
     }
     .menu-icon:hover { background: rgba(255,255,255,0.3); }
 
-    /* Login Button (right) */
-    .login-btn {
+    /* Google login button container */
+    #buttonDiv {
       position: absolute;
       top: 20px;
       right: 20px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      background: rgba(0, 123, 255, 0.9);
-      padding: 10px 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-    .login-btn:hover { background: rgba(0, 123, 255, 1); }
-
-    /* Google login button container */
-    #googleBtnContainer {
-      margin-top: 60px;
-      display: none;
     }
 
     /* Profile after login */
@@ -89,18 +68,41 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.3);
       padding: 6px 12px;
-      border-radius: 8px;
+      border-radius: 20px;
+      cursor: pointer;
     }
     .profile img {
-      width: 32px;
-      height: 32px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
     }
     .profile span {
       font-weight: bold;
       color: white;
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 55px;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 10px;
+      z-index: 100;
+    }
+    .dropdown button {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
     }
 
     /* Sidebar */
@@ -151,20 +153,19 @@
   </style>
 </head>
 <body>
+  <!-- Menu -->
   <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
 
-  <!-- Login Button -->
-  <a href="#" id="loginBtn" class="login-btn" onclick="showGoogleLogin()">Login</a>
-
   <!-- Google Login Button -->
-  <div id="googleBtnContainer">
-    <div id="buttonDiv"></div>
-  </div>
+  <div id="buttonDiv"></div>
 
   <!-- User Profile (hidden until login) -->
   <div id="profile" class="profile" style="display:none;">
     <img id="userPic" src="" alt="profile">
     <span id="userName"></span>
+    <div class="dropdown" id="dropdownMenu">
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 
   <!-- Sidebar -->
@@ -195,22 +196,15 @@
       }, 300);
     }
 
-    // Show Google login button under "Login"
-    function showGoogleLogin() {
-      document.getElementById("googleBtnContainer").style.display = "block";
-    }
-
     // Handle Google login response
     function handleCredentialResponse(response) {
-      const data = decodeJwtResponse(response.credential);
-
-      // Save user in localStorage
+      const data = parseJwt(response.credential);
       localStorage.setItem("googleUser", JSON.stringify(data));
-
       showProfile(data);
     }
 
-    function decodeJwtResponse(token) {
+    // Decode JWT
+    function parseJwt(token) {
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
@@ -220,15 +214,29 @@
     }
 
     function showProfile(user) {
-      document.getElementById("loginBtn").style.display = "none";
-      document.getElementById("googleBtnContainer").style.display = "none";
+      document.getElementById("buttonDiv").style.display = "none";
       document.getElementById("profile").style.display = "flex";
       document.getElementById("userPic").src = user.picture;
       document.getElementById("userName").innerText = user.name;
     }
 
+    function logout() {
+      google.accounts.id.disableAutoSelect();
+      localStorage.removeItem("googleUser");
+      document.getElementById("profile").style.display = "none";
+      document.getElementById("buttonDiv").style.display = "block";
+    }
+
+    // Toggle dropdown on profile click
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("profile").addEventListener("click", () => {
+        const menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      });
+    });
+
+    // Initialize Google
     window.onload = function () {
-      // Init Google login
       google.accounts.id.initialize({
         client_id: "999144737639-9attbi7ai023nmvo8usduic5ji9qcrqo.apps.googleusercontent.com",
         callback: handleCredentialResponse
@@ -245,6 +253,5 @@
       }
     }
   </script>
-  <script src="transition.js" defer></script>
 </body>
 </html>
