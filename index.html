@@ -161,7 +161,7 @@
   <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
 
   <!-- Login Button -->
-  <a href="login.html" id="loginBtn" class="login-btn">Login</a>
+  <a href="#" id="loginBtn" class="login-btn">Login</a>
 
   <!-- User Profile (hidden until login) -->
   <div id="profile" class="profile" style="display:none;">
@@ -185,6 +185,7 @@
   </div>
 
   <script>
+    // Sidebar
     function openMenu() {
       document.getElementById("sidebar").style.width = "240px";
       document.getElementById("menuIcon").style.display = "none"; 
@@ -199,10 +200,11 @@
     // Google Login response
     function handleCredentialResponse(response) {
       const data = decodeJwtResponse(response.credential);
-      document.getElementById("loginBtn").style.display = "none";
-      document.getElementById("profile").style.display = "flex";
-      document.getElementById("userPic").src = data.picture;
-      document.getElementById("userName").innerText = data.name;
+
+      // Save user in localStorage
+      localStorage.setItem("googleUser", JSON.stringify(data));
+
+      showProfile(data);
     }
 
     function decodeJwtResponse(token) {
@@ -214,12 +216,26 @@
       return JSON.parse(jsonPayload);
     }
 
+    function showProfile(user) {
+      document.getElementById("loginBtn").style.display = "none";
+      document.getElementById("profile").style.display = "flex";
+      document.getElementById("userPic").src = user.picture;
+      document.getElementById("userName").innerText = user.name;
+    }
+
     window.onload = function () {
-      google.accounts.id.initialize({
-        client_id: "YOUR_GOOGLE_CLIENT_ID",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.prompt();
+      // Check if already logged in
+      const user = JSON.parse(localStorage.getItem("googleUser"));
+      if (user) {
+        showProfile(user);
+      } else {
+        // Init Google login
+        google.accounts.id.initialize({
+          client_id: "YOUR_GOOGLE_CLIENT_ID", // replace with your real client ID
+          callback: handleCredentialResponse
+        });
+        google.accounts.id.prompt();
+      }
     }
   </script>
   <script src="transition.js" defer></script>
