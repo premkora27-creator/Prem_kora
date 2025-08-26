@@ -32,7 +32,7 @@
       color: #eee;
     }
 
-    /* Hamburger Button */
+    /* Hamburger Button (left) */
     .menu-icon {
       position: absolute;
       top: 20px;
@@ -53,6 +53,27 @@
       background: rgba(255,255,255,0.3);
     }
 
+    /* Login Button (right) */
+    .login-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: rgba(0, 123, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: rgba(0, 123, 255, 1);
+    }
+
     /* Sidebar */
     .sidebar {
       height: 100%;
@@ -67,6 +88,7 @@
       box-shadow: 2px 0 8px rgba(0,0,0,0.15);
     }
 
+    /* Sidebar Title */
     .sidebar h2 {
       text-align: center;
       margin: 0 0 20px;
@@ -76,6 +98,7 @@
       padding-bottom: 10px;
     }
 
+    /* Sidebar links */
     .sidebar a {
       padding: 14px 24px;
       text-decoration: none;
@@ -91,6 +114,7 @@
       color: #000;
     }
 
+    /* Close Button */
     .close-btn {
       position: absolute;
       top: 20px;
@@ -108,6 +132,7 @@
       background: rgba(0,0,0,0.1);
     }
 
+    /* Remove blue tap highlight on mobile */
     * {
       -webkit-tap-highlight-color: transparent;
     }
@@ -117,14 +142,15 @@
   <!-- Hamburger Menu -->
   <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
 
+  <!-- Login Button (top-right) -->
+  <a href="login.html" class="login-btn">Login</a>
+
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
     <span class="close-btn" onclick="closeMenu()">&times;</span>
     <h2>HOME</h2>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="login.html">Login</a>
-    <a href="signup.html">Sign Up</a>
   </div>
 
   <!-- Main Content -->
@@ -137,7 +163,7 @@
   <script>
     function openMenu() {
       document.getElementById("sidebar").style.width = "240px";
-      document.getElementById("menuIcon").style.display = "none";
+      document.getElementById("menuIcon").style.display = "none"; 
     }
     function closeMenu() {
       document.getElementById("sidebar").style.width = "0";
