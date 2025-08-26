@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prem Website</title>
 
+  <!-- Google Login -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- Link to external transition CSS -->
   <link rel="stylesheet" href="transition.css">
 
@@ -78,6 +81,28 @@
       background: rgba(0, 123, 255, 1);
     }
 
+    /* Profile after login */
+    .profile {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    .profile span {
+      font-weight: bold;
+      color: white;
+    }
+
     /* Sidebar */
     .sidebar {
       height: 100%;
@@ -92,7 +117,6 @@
       box-shadow: 2px 0 8px rgba(0,0,0,0.15);
     }
 
-    /* Sidebar Title */
     .sidebar h2 {
       text-align: center;
       margin: 0 0 20px;
@@ -102,7 +126,6 @@
       padding-bottom: 10px;
     }
 
-    /* Sidebar links */
     .sidebar a {
       padding: 14px 24px;
       text-decoration: none;
@@ -112,13 +135,11 @@
       border-bottom: 1px solid #eee;
       transition: background 0.2s, color 0.2s;
     }
-
     .sidebar a:hover {
       background: #f5f5f5;
       color: #000;
     }
 
-    /* Close Button */
     .close-btn {
       position: absolute;
       top: 20px;
@@ -131,23 +152,22 @@
       border-radius: 6px;
       transition: background 0.2s ease;
     }
-
     .close-btn:hover {
       background: rgba(0,0,0,0.1);
-    }
-
-    /* Remove blue tap highlight on mobile */
-    * {
-      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
 <body>
-  <!-- Hamburger Menu -->
   <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
 
-  <!-- Login Button (top-right) -->
-  <a href="login.html" class="login-btn">Login</a>
+  <!-- Login Button -->
+  <a href="login.html" id="loginBtn" class="login-btn">Login</a>
+
+  <!-- User Profile (hidden until login) -->
+  <div id="profile" class="profile" style="display:none;">
+    <img id="userPic" src="" alt="profile">
+    <span id="userName"></span>
+  </div>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
@@ -157,7 +177,7 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <!-- Main Content -->
+  <!-- Main -->
   <div class="container">
     <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
     <p>This Website owned by <b>PREM</b></p>
@@ -175,9 +195,33 @@
         document.getElementById("menuIcon").style.display = "block";
       }, 300);
     }
-  </script>
 
-  <!-- Link to external transition JS -->
+    // Google Login response
+    function handleCredentialResponse(response) {
+      const data = decodeJwtResponse(response.credential);
+      document.getElementById("loginBtn").style.display = "none";
+      document.getElementById("profile").style.display = "flex";
+      document.getElementById("userPic").src = data.picture;
+      document.getElementById("userName").innerText = data.name;
+    }
+
+    function decodeJwtResponse(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "YOUR_GOOGLE_CLIENT_ID",
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.prompt();
+    }
+  </script>
   <script src="transition.js" defer></script>
 </body>
-  </html>
+</html>
