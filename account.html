@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Account</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: inline-block;
+    }
+    .card img {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+    .card h2 {
+      margin: 10px 0;
+    }
+    .card p {
+      color: #666;
+      margin: 5px 0 15px;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .logout { background: #ff4d4d; color: white; }
+    .back { background: #4d79ff; color: white; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img id="userPic" src="" alt="profile picture">
+    <h2 id="userName"></h2>
+    <p id="userEmail"></p>
+
+    <button class="logout" onclick="logout()">Logout</button>
+    <div id="buttonDiv"></div>
+    <button class="back" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+  </div>
+
+  <script>
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function handleCredentialResponse(response) {
+      const data = parseJwt(response.credential);
+      localStorage.setItem("googleUser", JSON.stringify(data));
+      showUser(data);
+    }
+
+    function showUser(user) {
+      document.getElementById("userPic").src = user.picture;
+      document.getElementById("userName").innerText = user.name;
+      document.getElementById("userEmail").innerText = user.email;
+    }
+
+    function logout() {
+      google.accounts.id.disableAutoSelect();
+      localStorage.removeItem("googleUser");
+      window.location.href = "index.html";
+    }
+
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "999144737639-9attbi7ai023nmvo8usduic5ji9qcrqo.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }
+      );
+
+      const user = JSON.parse(localStorage.getItem("googleUser"));
+      if (user) {
+        showUser(user);
+        document.getElementById("buttonDiv").style.display = "none"; // hide login button if already logged in
+      }
+    }
+  </script>
+</body>
+</html>
