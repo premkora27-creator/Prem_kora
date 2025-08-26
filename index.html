@@ -35,7 +35,7 @@
       color: #eee;
     }
 
-    /* Hamburger Button (left) */
+    /* Hamburger Button */
     .menu-icon {
       position: absolute;
       top: 20px;
@@ -53,14 +53,14 @@
     }
     .menu-icon:hover { background: rgba(255,255,255,0.3); }
 
-    /* Google login button container */
+    /* Google login button */
     #buttonDiv {
       position: absolute;
       top: 20px;
       right: 20px;
     }
 
-    /* Profile after login */
+    /* Profile box */
     .profile {
       position: absolute;
       top: 20px;
@@ -83,7 +83,7 @@
       color: white;
     }
 
-    /* Dropdown menu */
+    /* Dropdown */
     .dropdown {
       display: none;
       position: absolute;
@@ -94,15 +94,20 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       padding: 10px;
       z-index: 100;
+      min-width: 150px;
     }
     .dropdown button {
-      background: #ff4d4d;
+      background: #6200ea;
       color: white;
       border: none;
       padding: 8px 14px;
       border-radius: 6px;
       cursor: pointer;
       width: 100%;
+      margin-bottom: 6px;
+    }
+    .dropdown button.logout {
+      background: #ff4d4d;
     }
 
     /* Sidebar */
@@ -159,12 +164,13 @@
   <!-- Google Login Button -->
   <div id="buttonDiv"></div>
 
-  <!-- User Profile (hidden until login) -->
+  <!-- Profile -->
   <div id="profile" class="profile" style="display:none;">
     <img id="userPic" src="" alt="profile">
     <span id="userName"></span>
     <div class="dropdown" id="dropdownMenu">
-      <button onclick="logout()">Logout</button>
+      <button class="logout" onclick="logout()">Logout</button>
+      <button onclick="loginAnother()">Login Another Account</button>
     </div>
   </div>
 
@@ -196,7 +202,7 @@
       }, 300);
     }
 
-    // Handle Google login response
+    // Handle login
     function handleCredentialResponse(response) {
       const data = parseJwt(response.credential);
       localStorage.setItem("googleUser", JSON.stringify(data));
@@ -213,6 +219,7 @@
       return JSON.parse(jsonPayload);
     }
 
+    // Show profile
     function showProfile(user) {
       document.getElementById("buttonDiv").style.display = "none";
       document.getElementById("profile").style.display = "flex";
@@ -220,6 +227,7 @@
       document.getElementById("userName").innerText = user.name;
     }
 
+    // Logout
     function logout() {
       google.accounts.id.disableAutoSelect();
       localStorage.removeItem("googleUser");
@@ -227,7 +235,13 @@
       document.getElementById("buttonDiv").style.display = "block";
     }
 
-    // Toggle dropdown on profile click
+    // Login another account
+    function loginAnother() {
+      logout();
+      google.accounts.id.prompt(); // force choose account popup
+    }
+
+    // Toggle dropdown
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("profile").addEventListener("click", () => {
         const menu = document.getElementById("dropdownMenu");
@@ -246,7 +260,7 @@
         { theme: "outline", size: "large" }
       );
 
-      // Check if already logged in
+      // If already logged in
       const user = JSON.parse(localStorage.getItem("googleUser"));
       if (user) {
         showProfile(user);
