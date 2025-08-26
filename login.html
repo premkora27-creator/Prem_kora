@@ -3,100 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Prem Website</title>
+  <title>Login Page</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #89f7fe, #66a6ff);
-    }
-    .login-box {
-      background: rgba(255,255,255,0.9);
-      padding: 40px;
-      border-radius: 12px;
       text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      width: 320px;
+      margin-top: 100px;
+      background: #f0f0f0;
     }
-    h1 {
-      margin-bottom: 20px;
-      color: #333;
+    #buttonDiv {
+      margin: 20px auto;
     }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      color: #fff;
-      border-radius: 8px;
-      transition: 0.3s ease;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      width: 100%;
-      border: none;
-      cursor: pointer;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(135deg, #ff6a00, #ee0979);
-    }
-    p {
-      margin-top: 15px;
-    }
-    a {
-      text-decoration: none;
-      color: #2575fc;
-    }
-    .google-login {
+    .profile {
       margin-top: 20px;
+      padding: 10px;
+    }
+    .profile img {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 8px;
+    }
+    .back-home:hover {
+      background: #0056b3;
     }
   </style>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="login-box">
-    <h1>Login</h1>
-    <form>
-      <input type="text" placeholder="Username" required>
-      <input type="password" placeholder="Password" required>
-      <button class="btn" type="submit">Login</button>
-    </form>
 
-    <!-- Google Login -->
-    <div class="google-login">
-      <div id="g_id_onload"
-           data-client_id="YOUR_GOOGLE_CLIENT_ID"
-           data-context="signin"
-           data-ux_mode="redirect"
-           data-login_uri="index.html"
-           data-auto_prompt="false">
-      </div>
-      <div class="g_id_signin"
-           data-type="standard"
-           data-shape="rectangular"
-           data-theme="outline"
-           data-text="signin_with"
-           data-size="large"
-           data-logo_alignment="left">
-      </div>
-    </div>
+  <h1>Login with Google</h1>
+  <div id="buttonDiv"></div>
 
-    <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
-    <p><a href="index.html">⬅ Back to Home</a></p>
+  <div id="profile" class="profile" style="display: none;">
+    <img id="profilePic" src="" alt="Profile Picture"><br>
+    <strong id="username"></strong>
   </div>
+
+  <a href="index.html" class="back-home">⬅ Back to Home</a>
+
+  <script>
+    function handleCredentialResponse(response) {
+      const data = decodeJwt(response.credential);
+      console.log("Google User Data:", data);
+
+      // Save in localStorage
+      localStorage.setItem("googleUser", JSON.stringify(data));
+
+      // Show profile
+      document.getElementById("profilePic").src = data.picture;
+      document.getElementById("username").innerText = data.name;
+      document.getElementById("profile").style.display = "block";
+
+      // Hide button
+      document.getElementById("buttonDiv").style.display = "none";
+    }
+
+    // Decode JWT token
+    function decodeJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    // Initialize Google login
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "999144737639-9attbi7ai023nmvo8usduic5ji9qcrqo.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }
+      );
+    }
+  </script>
 </body>
 </html>
