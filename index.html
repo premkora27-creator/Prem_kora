@@ -4,240 +4,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prem Website</title>
-
-  <!-- Google Login -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- Link to external transition CSS -->
-  <link rel="stylesheet" href="transition.css">
-
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background: linear-gradient(to bottom right, #d7aefb, #aecbfa);
       min-height: 100vh;
-      text-align: center;
-      background: linear-gradient(135deg, #e2c6f5, #b5baf8);
-      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
+    .google-btn, .profile-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: white;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+    .google-btn:hover, .profile-btn:hover {
+      transform: scale(1.05);
+    }
+    .google-btn img, .profile-btn img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+    .hidden {
+      display: none;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 60px;
+      right: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 160px;
+    }
+    .dropdown button {
+      background: #f4f4f4;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .dropdown button:hover {
+      background: #ddd;
     }
 
     h1 {
       font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 16px;
-      margin: 5px 0;
-      color: #eee;
-    }
-
-    /* Hamburger Button (left) */
-    .menu-icon {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      cursor: pointer;
-      font-size: 24px;
-      color: white;
-      z-index: 1001;
-      user-select: none;
-      background: rgba(255,255,255,0.2);
-      padding: 10px 14px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: background 0.2s ease;
-    }
-
-    .menu-icon:hover {
-      background: rgba(255,255,255,0.3);
-    }
-
-    /* Login Button (right) */
-    .login-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      background: rgba(0, 123, 255, 0.9);
-      padding: 10px 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-
-    .login-btn:hover {
-      background: rgba(0, 123, 255, 1);
-    }
-
-    /* Profile after login */
-    .profile {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 8px;
-    }
-    .profile img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-    .profile span {
-      font-weight: bold;
-      color: white;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: #fff;
-      overflow-x: hidden;
-      transition: 0.3s;
-      padding-top: 60px;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-    }
-
-    .sidebar h2 {
+      color: black;
       text-align: center;
-      margin: 0 0 20px;
-      font-size: 22px;
-      color: #333;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 10px;
-    }
-
-    .sidebar a {
-      padding: 14px 24px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #333;
-      display: block;
-      border-bottom: 1px solid #eee;
-      transition: background 0.2s, color 0.2s;
-    }
-    .sidebar a:hover {
-      background: #f5f5f5;
-      color: #000;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      font-size: 32px;
-      cursor: pointer;
-      color: #333;
-      background: rgba(0,0,0,0.05);
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: background 0.2s ease;
-    }
-    .close-btn:hover {
-      background: rgba(0,0,0,0.1);
     }
   </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
 </head>
 <body>
-  <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
+  <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
 
-  <!-- Login Button -->
-  <a href="#" id="loginBtn" class="login-btn">Login</a>
+  <!-- Google login button container -->
+  <div id="g_id_signin" class="google-btn"></div>
 
-  <!-- User Profile (hidden until login) -->
-  <div id="profile" class="profile" style="display:none;">
-    <img id="userPic" src="" alt="profile">
-    <span id="userName"></span>
+  <!-- Profile button (hidden initially) -->
+  <div id="profile" class="profile-btn hidden">
+    <img id="profile-pic" src="" alt="Profile">
+    <span id="profile-name"></span>
   </div>
 
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <span class="close-btn" onclick="closeMenu()">&times;</span>
-    <h2>HOME</h2>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
-
-  <!-- Main -->
-  <div class="container">
-    <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
-    <p>This Website owned by <b>PREM</b></p>
-    <p>This Website for fun but currently development</p>
+  <!-- Dropdown menu for logout -->
+  <div id="dropdown" class="dropdown">
+    <button onclick="logout()">Logout</button>
+    <button onclick="switchAccount()">Login with another account</button>
   </div>
 
   <script>
-    // Sidebar
-    function openMenu() {
-      document.getElementById("sidebar").style.width = "240px";
-      document.getElementById("menuIcon").style.display = "none"; 
-    }
-    function closeMenu() {
-      document.getElementById("sidebar").style.width = "0";
-      setTimeout(() => {
-        document.getElementById("menuIcon").style.display = "block";
-      }, 300);
-    }
-
-    // Google Login response
-    function handleCredentialResponse(response) {
-      const data = decodeJwtResponse(response.credential);
-
-      // Save user in localStorage
-      localStorage.setItem("googleUser", JSON.stringify(data));
-
-      showProfile(data);
-    }
-
-    function decodeJwtResponse(token) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    function showProfile(user) {
-      document.getElementById("loginBtn").style.display = "none";
-      document.getElementById("profile").style.display = "flex";
-      document.getElementById("userPic").src = user.picture;
-      document.getElementById("userName").innerText = user.name;
-    }
-
+    // Initialize Google Sign-In
     window.onload = function () {
-      // Check if already logged in
-      const user = JSON.parse(localStorage.getItem("googleUser"));
-      if (user) {
-        showProfile(user);
-      } else {
-        // Init Google login
-        google.accounts.id.initialize({
-          client_id: "YOUR_GOOGLE_CLIENT_ID", // replace with your real client ID
-          callback: handleCredentialResponse
-        });
-        google.accounts.id.prompt();
-      }
+      google.accounts.id.initialize({
+        client_id: "999144737639-9attbi7ai023nmvo8usduic5ji9qcrqo.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("g_id_signin"),
+        { theme: "outline", size: "large" }
+      );
+    };
+
+    // Handle login response
+    function handleCredentialResponse(response) {
+      const data = jwt_decode(response.credential); // decode JWT
+      console.log(data);
+
+      // Update UI
+      document.getElementById("g_id_signin").classList.add("hidden");
+      document.getElementById("profile").classList.remove("hidden");
+
+      document.getElementById("profile-pic").src = data.picture;
+      document.getElementById("profile-name").textContent = data.name;
+    }
+
+    // Toggle dropdown on profile click
+    document.getElementById("profile").addEventListener("click", function () {
+      const dropdown = document.getElementById("dropdown");
+      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    });
+
+    // Logout function
+    function logout() {
+      document.getElementById("profile").classList.add("hidden");
+      document.getElementById("dropdown").style.display = "none";
+      document.getElementById("g_id_signin").classList.remove("hidden");
+    }
+
+    // Switch account function
+    function switchAccount() {
+      logout();
+      google.accounts.id.prompt(); // show Google account chooser
     }
   </script>
-  <script src="transition.js" defer></script>
 </body>
 </html>
