@@ -15,31 +15,21 @@ body {
   background: linear-gradient(135deg, #e2c6f5, #b5baf8);
   padding-top: 80px;
 }
-
-/* Buttons & profile */
 .menu-icon { position: absolute; top: 20px; left: 20px; cursor: pointer; font-size: 24px; color: white; z-index: 1001; user-select: none; background: rgba(255,255,255,0.2); padding: 10px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background 0.2s ease; }
 .menu-icon:hover { background: rgba(255,255,255,0.3); }
-
 #loginBtn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 20px; cursor: pointer; color: white; font-weight: bold; border: none; }
-
 .profile { position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 20px; cursor: pointer; display: none; }
 .profile img { width: 35px; height: 35px; border-radius: 50%; }
 .profile span { font-weight: bold; color: white; }
-
-/* Sidebar */
 .sidebar { height: 100%; width: 0; position: fixed; top: 0; left: 0; background: #fff; overflow-x: hidden; transition: 0.3s; padding-top: 60px; box-shadow: 2px 0 8px rgba(0,0,0,0.15); }
 .sidebar h2 { text-align: center; margin: 0 0 20px; font-size: 22px; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
 .sidebar a { padding: 14px 24px; text-decoration: none; font-size: 18px; color: #333; display: block; border-bottom: 1px solid #eee; transition: background 0.2s, color 0.2s; }
 .sidebar a:hover { background: #f5f5f5; color: #000; }
 .close-btn { position: absolute; top: 20px; right: 25px; font-size: 32px; cursor: pointer; color: #333; background: rgba(0,0,0,0.05); padding: 6px 12px; border-radius: 6px; transition: background 0.2s ease; }
 .close-btn:hover { background: rgba(0,0,0,0.1); }
-
-/* Main */
 .container { max-width: 600px; margin: 0 auto; }
 h1 { font-size: 28px; font-weight: bold; margin-bottom: 15px; }
 p { font-size: 16px; margin: 5px 0; color: #eee; }
-
-/* popup */
 .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; text-align: center; }
 .popup p { margin-bottom: 15px; color: #333; font-weight: 500; }
 .popup button { background: #2575fc; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
@@ -47,19 +37,13 @@ p { font-size: 16px; margin: 5px 0; color: #eee; }
 </head>
 <body>
 
-<!-- Menu -->
 <div id="menuIcon" class="menu-icon" onclick="openMenu()">☰</div>
-
-<!-- Login button -->
 <button id="loginBtn" onclick="goLogin()">Login</button>
-
-<!-- Profile -->
 <div id="profile" class="profile">
   <img id="userPic" src="" alt="profile">
   <span id="userName"></span>
 </div>
 
-<!-- Sidebar -->
 <div id="sidebar" class="sidebar">
   <span class="close-btn" onclick="closeMenu()">&times;</span>
   <h2>HOME</h2>
@@ -67,28 +51,20 @@ p { font-size: 16px; margin: 5px 0; color: #eee; }
   <a href="contact.html">Contact</a>
 </div>
 
-<!-- Main -->
 <div class="container">
   <h1>🥰 WELCOME TO PREM WEBSITE 😊</h1>
   <p>This Website owned by <b>PREM</b></p>
   <p>This Website for fun but currently development</p>
 </div>
 
-<!-- popup -->
-<div class="popup" id="popup">
-  <p id="popupMsg"></p>
-  <button onclick="closePopup()">OK</button>
-</div>
+<div class="popup" id="popup"><p id="popupMsg"></p><button onclick="closePopup()">OK</button></div>
 
-<script src="transition.js"></script>
 <script>
-function openMenu(){ document.getElementById("sidebar").style.width = "240px"; document.getElementById("menuIcon").style.display = "none"; }
+function openMenu(){ document.getElementById("sidebar").style.width = "240px"; document.getElementById("menuIcon").style.display = "none";}
 function closeMenu(){ document.getElementById("sidebar").style.width = "0"; setTimeout(()=>{document.getElementById("menuIcon").style.display="block";},300);}
 function goLogin(){ window.location.href = 'login.html'; }
-function showPopup(msg, callback){ const popup=document.getElementById('popup'); const popupMsg=document.getElementById('popupMsg'); popupMsg.innerText=msg; popup.style.display='block'; popup.callback=callback;}
+function showPopup(msg,callback){ const popup=document.getElementById('popup'); const popupMsg=document.getElementById('popupMsg'); popupMsg.innerText=msg; popup.style.display='block'; popup.callback=callback;}
 function closePopup(){ const popup=document.getElementById('popup'); popup.style.display='none'; if(popup.callback) popup.callback();}
-
-// show profile if logged in
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 if(currentUser){
   document.getElementById('loginBtn').style.display='none';
@@ -97,5 +73,6 @@ if(currentUser){
   document.getElementById('userName').innerText = currentUser.email || currentUser.name;
 }
 </script>
+
 </body>
 </html>
