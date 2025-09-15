@@ -5,132 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login Page</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="transition.css">
 <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  body {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .login-container {
-    background: #fff;
-    padding: 40px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    width: 350px;
-    text-align: center;
-    transition: all 0.3s ease;
-  }
-
-  .login-container h2 {
-    margin-bottom: 25px;
-    color: #333;
-  }
-
-  .login-container input {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-
-  .login-container button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 8px;
-    background: #2575fc;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .login-container button:hover {
-    background: #6a11cb;
-  }
-
-  .google-btn {
-    background: #fff;
-    color: #333;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .google-btn img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .signup-btn, .home-btn {
-    background: transparent;
-    color: #2575fc;
-    border: none;
-    margin-top: 10px;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 14px;
-  }
-
-  .signup-btn:hover, .home-btn:hover {
-    color: #6a11cb;
-  }
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif;}
+body{background:linear-gradient(to right,#6a11cb,#2575fc);height:100vh;display:flex;justify-content:center;align-items:center;}
+.login-container{background:#fff;padding:40px 30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);width:350px;text-align:center;transition:all 0.3s ease;}
+.login-container h2{margin-bottom:25px;color:#333;}
+.login-container input{width:100%;padding:12px 15px;margin:10px 0;border-radius:8px;border:1px solid #ccc;}
+.login-container button{width:100%;padding:12px;margin-top:15px;border:none;border-radius:8px;background:#2575fc;color:#fff;font-size:16px;cursor:pointer;transition:0.3s;}
+.login-container button:hover{background:#6a11cb;}
+.google-btn{background:#fff;color:#333;border:1px solid #ccc;display:flex;justify-content:center;align-items:center;gap:10px;}
+.google-btn img{width:20px;height:20px;}
+.signup-btn,.home-btn{background:transparent;color:#2575fc;border:none;margin-top:10px;cursor:pointer;text-decoration:underline;font-size:14px;}
+.signup-btn:hover,.home-btn:hover{color:#6a11cb;}
+.popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px 30px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.3);z-index:1000;text-align:center;}
+.popup p{margin-bottom:15px;color:#333;font-weight:500;}
+.popup button{background:#2575fc;color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;}
 </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Welcome Back!</h2>
-    <input type="email" placeholder="Email" id="email">
-    <input type="password" placeholder="Password" id="password">
-    <button onclick="login()">Login</button>
-    <button class="google-btn" onclick="loginWithGoogle()">
-      <img src="https://img.icons8.com/color/48/000000/google-logo.png"/> Login with Google
-    </button>
-    <button class="signup-btn" onclick="signUp()">Sign Up</button>
-    <button class="home-btn" onclick="goHome()">Go to Home</button>
-  </div>
 
-  <script>
-    function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+<div class="login-container">
+<h2>Welcome Back!</h2>
+<input type="email" placeholder="Email" id="email">
+<input type="password" placeholder="Password" id="password">
+<button onclick="login()">Login</button>
+<button class="google-btn" onclick="loginWithGoogle()"><img src="https://img.icons8.com/color/48/000000/google-logo.png"/> Login with Google</button>
+<button class="signup-btn" onclick="goSignUp()">Sign Up</button>
+<button class="home-btn" onclick="goHome()">Go to Home</button>
+</div>
 
-      if(email && password){
-        alert('Logged in successfully!');
-        // Redirect to dashboard if you have one
-        // window.location.href = 'dashboard.html';
-      } else {
-        alert('Please enter email and password.');
-      }
-    }
+<div class="popup" id="popup"><p id="popupMsg"></p><button onclick="closePopup()">OK</button></div>
 
-    function loginWithGoogle() {
-      alert('Google login clicked!');
-      // Google OAuth integration can be added here
-    }
-
-    function signUp() {
-      // Redirect to signup page
-      window.location.href = 'signup.html';
-    }
-
-    function goHome() {
-      window.location.href = 'index.html';
-    }
-  </script>
+<script src="transition.js"></script>
+<script>
+function showPopup(msg,callback){const popup=document.getElementById('popup');const popupMsg=document.getElementById('popupMsg');popupMsg.innerText=msg;popup.style.display='block';popup.callback=callback;}
+function closePopup(){const popup=document.getElementById('popup');popup.style.display='none';if(popup.callback) popup.callback();}
+function login(){const email=document.getElementById('email').value;const password=document.getElementById('password').value;if(!email||!password){showPopup('Please enter email and password.');return;}
+const storedUser=JSON.parse(localStorage.getItem('loggedInUser'));if(storedUser&&storedUser.email===email){localStorage.setItem('currentUser',JSON.stringify(storedUser));showPopup('Logged in successfully!',()=>{window.location.href='index.html';});}else{showPopup('Invalid email or password.');}}
+function loginWithGoogle(){alert('Google login clicked!');}
+function goSignUp(){window.location.href='signup.html';}
+function goHome(){window.location.href='index.html';}
+</script>
 </body>
 </html>
